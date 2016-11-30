@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        .col-md-12 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+<div class="container">
+
+    <div class="row" style="margin-top:50px;">
+        <h1 class="text-center">InsertionSort</h1>
+    </div>
+    <div id="buttonsdiv" class="row text-center" style="margin-top:50px;">
+
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var arrhis=[];
+    var arr = [];
+    function sort() {
+        var len = arr.length;
+        for(var i=0;i<len;i++){
+            //获得当前哨兵
+            var tem=arr[i];
+            console.log("当前哨兵为："+tem);
+            for(var j=0;j<i;j++){
+                    //遍历前面的排好序的数组，如果需要插入，那就挪动前面的数组
+                console.log("比较："+arr[j] +"  "+tem);
+                    if(arr[j]>tem){
+                        console.log("插入位置："+j);
+                        console.log("交换："+arr[j] +"  "+tem);
+                        move(arr,j,i);
+                        arr[j]=tem;
+                        break;
+                    }
+
+                arrhis.push(tem);
+                arrhis.push(arr.slice());
+                console.log("当前数组为："+arr);
+            }
+        }
+    }
+    function move(arr,index,endindex){
+        var len=arr.length;
+        for(var i=endindex-1;i>=index;i--){
+            arr[i+1]=arr[i];
+        }
+    }
+
+    function draw(tem,buttons){
+        var html="";
+        html="<bsptton type=\"button\" class=\"btn btn-danger\" style=\"margin-left:5px;\">"+tem+"</bsptton>&nbsp;&nbsp;&nbsp;";
+        for(var n=0;n<buttons.length;n++){
+            html=html+"<button type=\"button\" class=\"btn btn-primary\" style=\"margin-left:5px;\">"+buttons[n]+"</button>";
+        }
+
+        $("#buttonsdiv").html(html);
+
+    }
+    function random(){
+        for(var i=0;i<20;i++){
+           arr.push(Math.floor(Math.random() * 100 ));
+        }
+    }
+    random();
+    sort();
+    show();
+    function show(){
+        this.timer = setInterval(function(){
+            if(arrhis.length>0){
+                draw(arrhis.shift(),arrhis.shift());
+            }else{
+                clearInterval(this.timer);
+            }
+        },300);
+    }
+</script>
+</html>
