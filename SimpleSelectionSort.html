@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        .col-md-12 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+<div class="container">
+
+    <div class="row" style="margin-top:50px;">
+        <h1 class="text-center">SimpleSelectionSort</h1>
+    </div>
+    <div id="buttonsdiv" class="row text-center" style="margin-top:50px;">
+
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var arrhis=[];
+    var arr = [];
+    function sort() {
+        var len = arr.length;
+        for(var n=0;n<len;n++){
+        //n为当前需要确定的位置
+           var indexs= getMinMax(arr, n);
+            var minIndex=indexs.split(",")[0];
+            var maxIndex=indexs.split(",")[1];
+
+            var tem=arr[n];
+            arr[n]=arr[minIndex];
+            arr[minIndex]=tem;
+
+                tem=arr[len-n-1];
+                 arr[len-n-1]=arr[maxIndex];
+                 arr[maxIndex]=tem;
+            this.arrhis.push(arr.slice());
+            if(len-n-1<=n){
+             break;
+            }
+
+        }
+    }
+
+    
+    function getMinMax(arr2,index) {
+       var len=arr2.length;
+        var min=arr2[index];
+        var minIndex=index;
+        var max=arr2[len-index-1];
+        var maxIndex=len-index-1;
+        for(var n=index+1;n<len-index-1;n++){
+                if(arr2[n]<min){
+                    min=arr2[n];
+                    minIndex=n;
+                }
+                if(arr2[n]>max){
+                    max=arr2[n];
+                    maxIndex=n;
+                }
+        }
+
+        return minIndex+","+maxIndex;
+    }
+
+    function draw(buttons){
+        var html="";
+
+        for(var n=0;n<buttons.length;n++){
+             html=html+"<button type=\"button\" class=\"btn btn-primary\" style=\"margin-left:5px;\">"+buttons[n]+"</button>";
+        }
+
+        $("#buttonsdiv").html(html);
+
+    }
+    function random(){
+        for(var i=0;i<40;i++){
+            arr.push(Math.floor(Math.random() * 40 ));
+        }
+    }
+    random();
+    sort();
+    show();
+function show(){
+    this.timer = setInterval(function(){
+        if(arrhis.length>0){
+            draw(arrhis.shift());
+        }else{
+            clearInterval(this.timer);
+        }
+    },300);
+}
+</script>
+</html>
